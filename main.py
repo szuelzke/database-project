@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-#from flask_mysqldb import MySQL
+from flask_mysqldb import MySQL
 from ast import literal_eval
-#import MySQLdb.cursors
+import MySQLdb.cursors
 import re
 
 app = Flask(__name__)
@@ -16,8 +16,8 @@ app = Flask(__name__)
 # app.config['MYSQL_DB'] = ''
 
 # Intialize MySQL
-#mysql = MySQL(app)
-# CORS(app)
+mysql = MySQL(app)
+
 
 @app.route('/home.html', methods=['GET', 'POST'])
 def home():
