@@ -24,8 +24,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             $query->bind_param('s',$email);
             $query->execute();
             $row = $query->fetch();
-            echo $row['password'];
-            echo "testing";
 
             if($row) {
                 if(password_verify($password, $password_hash)) {
