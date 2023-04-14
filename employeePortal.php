@@ -20,7 +20,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     }
 
     if(empty($error)) {
-        if($query = $db->prepare("SELECT * FROM customers WHERE customer_email = ?")) {
+        if($query = $db->prepare("SELECT * FROM employees WHERE employee_email = ?")) {
             $query->bind_param('s',$email);
             $query->execute();
             $row = $query->fetch();
@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                     $_SESSION["userid"] = $row['id'];
                     $_SESSION["user"] = $row;
                     echo "test";
-                    header("location: home.html");
+                    header("location: employee.html");
                     exit;
                 } else {
                     $error .= '<p class="error">Password is not valid.</p>';
@@ -53,14 +53,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 <html lang="en">
     <head>
         <meta charset = "UTF-8">
-        <title>Login</title>
+        <title>Employee Portal</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Login</h2>
+                    <h2>Employee Portal</h2>
                     <p>Please fill in your email and password.</p>
                     <form action="" method="post">
                         <div class="form-group">
@@ -74,7 +74,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-primary" value="Submit">
                         </div>
-                        <p>Don't have an account? <a href="register.php">Register here</a>.</p>
                     </form>
                 </div>
             </div>
