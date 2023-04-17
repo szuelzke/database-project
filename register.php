@@ -51,6 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 if($result) {
                     $error .= '<p class="success">Your reistration was successfull</p>';
                     echo "Your reistration was successfull";
+                    header("location: login.php");
                 } else {
                     $error .= '<p class="error">Something went wrong!</p>';
                 }

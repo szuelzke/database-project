@@ -72,6 +72,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         <link rel="stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     </head>
     <body>
+        <nav style="text-align: left">
+			<ul>
+				<li><a href= "/database-project/employee.html"> Back</a></li>
+			</ul>
+		</nav>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
