@@ -44,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $db->prepare("INSERT INTO customers (customer_name, customer_email, phone_number, card_number, address, city, state, zip_code, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                $insertQuery = $db->prepare("INSERT INTO customers (customer_name, customer_email, phone_number, card_number, address, city, state, zip_code, password) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
                 $insertQuery->bind_param("sssssssss", $fullname, $email, $phone_number, $card_number, $address, $city, $state, $zip_code, $password_hash);
                 $result = $insertQuery->execute();
@@ -75,11 +75,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         <link rel="stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     </head>
     <body>
+        <nav style="text-align: left">
+			<ul>
+				<li><a href= "/database-project/employee.html"> Back</a></li>
+			</ul>
+		</nav>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h2>Add Customer</h2>
-                    <p>Please fill this form to create an account</p>
+                    <p>Please fill this form to add a customer</p>
                     <form action="" method="post">
                         <div class="form-group">
                             <label>Full Name</label>
