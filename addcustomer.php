@@ -1,6 +1,6 @@
 <?php
 
-require_once "config.php";
+require_once "index.php";
 require_once "session.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $query->close();
     //$insertQuery->close();
-    mysqli_close($db);
+    $pdo = null;
 }
 ?>
 
