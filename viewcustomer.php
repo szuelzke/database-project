@@ -1,9 +1,9 @@
 <?php
 include('index.php');
-$query = "SELECT * FROM customers";
-$prepared = $db->prepare($query);
-$prepared->execute();
-$result = $prepared->get_result();
+$query = $pdo->prepare("SELECT * FROM customers");
+//$prepared = $pdo->prepare($query);
+$query->execute();
+//$result = $prepared->get_result();
 ?>
 <table border="1" cellspacing="0" cellpadding="10">
   <tr>
@@ -20,9 +20,9 @@ $result = $prepared->get_result();
     <th>Password</th>
   </tr>
 <?php
-if ($result->num_rows > 0) {
+//if ($query->num_rows > 0) {
   $sn=1;
-  while($data = $result->fetch_assoc()) {
+  while($data = $query->fetch()) {
  ?>
  <tr>
    <td><?php echo $sn; ?> </td>
@@ -39,10 +39,7 @@ if ($result->num_rows > 0) {
  <tr>
  <?php
   $sn++;}
-} else { 
+//}else { 
   ?>
-    <tr>
-     <td colspan="8">No data found</td>
-    </tr>
- <?php } ?>
+
  </table

@@ -5,13 +5,13 @@ require_once "session.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
-    $product_name = trim($_POST['name']);
-    if($query = $pdo->prepare("SELECT * FROM products WHERE product_name = ? ")) {
+    $itemName = trim($_POST['name']);
+    if($query = $pdo->prepare("SELECT * FROM merch WHERE itemName = ? ")) {
 
         $error = '';
 
         //$query->bind_param('s', $product_name);
-        $query->execute(array($product_name));
+        $query->execute(array($itemName));
         //$query->store_result();
 
         if($query->num_rows < 0) {
@@ -19,9 +19,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             $error .= '<p class="Error">err</p>';
         } else {
             echo "debug";
-            $update = $pdo->prepare("DELETE FROM products WHERE product_name = ?");
+            $update = $pdo->prepare("DELETE FROM merch WHERE itemName = ?");
             //$update->bind_param('s', $product_name);
-            $result = $update->execute(array($product_name));
+            $result = $update->execute(array($itemName));
             if($result){
                 echo "Customer Successfully removed!";
                 header("location: employee.html");

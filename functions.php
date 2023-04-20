@@ -30,7 +30,7 @@ function template_header($title) {
                     <li><a href="/database-project/products.php">Shop</a></li>
                     <li><a href="/database-project/AboutUs.html">About Us</a></li>
                     <li><a href="/database-project/logout.php">Logout</a></li>
-                    <a href="#"><img src="https://th.bing.com/th/id/OIP.wSF1rtzcFeEgwEBNxJUiPQHaHa?w=213&h=193&c=7&r=0&o=5&dpr=1.5&pid=1.7" width="30" height="30" alt=""></a>
+                    <a href="/database-project/cart.php"><img src="https://th.bing.com/th/id/OIP.wSF1rtzcFeEgwEBNxJUiPQHaHa?w=213&h=193&c=7&r=0&o=5&dpr=1.5&pid=1.7" width="30" height="30" alt=""></a>
                 </ul>
         </header>
         </body>

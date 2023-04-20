@@ -2,49 +2,33 @@
 
 require_once "index.php";
 require_once "session.php";
-require_once "cart.php";
-
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     
-    if ($products_in_cart) {
-        foreach ($products_in_cart as $k => $v) {
-            $stmt = $pdo->prepare('UPDATE merch SET itemQuantity = itemQuantity - ? WHERE itemID = ?');
-            $stmt->execute([ $v, $k ]);
-        }
-        // remove items from cart as no longer needed
-        unset($_SESSION['cart']);
-    } else {
-        exit('There are no items in cart!');
-    }
-
     $customer_email = trim($_POST['customer_email']);
-    $order_number = trim($_POST['order_number']);
-    $num_of_items = count($products_in_cart);
-    $total_price = $subtotal;
-    $employee_email = trim($_POST['employee_email']);
-    $purchase_date = date("y/m/d");
-    $arrival_date = date('y:m:d', strtotime('+3 days'));
+    $card_number = trim($_POST['card_number']);
+    $payment_id = trim($_POST['payment_id']);
+    $purchase_date = date('y:m:d', strtotime('-1 day'));
 
-    if($query = $pdo->prepare("SELECT * FROM order_info WHERE order_number = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM payment WHERE payment_id = ? ")) {
         $error = '';
 
         //$query->bind_param('s', $order_number);
-        $query->execute(array($order_number));
+        $query->execute(array($payment_id));
         //$query->store_result();
 
         if($query->num_rows > 0) {
-            $error .= '<p class="Error">Order already registered!</p>';
+            $error .= '<p class="Error">Payment already given!</p>';
         } else {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $pdo->prepare("INSERT INTO order_info (customer_email, order_number, num_of_items, total_price, employee_email, purchase_date, arrival_date) VALUE (?, ?, ?, ?, ?, ?, ?)");
+                $insertQuery = $pdo->prepare("INSERT INTO payment (payment_id, customer_email, card_number, payment_date) VALUE (?, ?, ?, ?)");
 
                 //$insertQuery->bind_param("sssssss", $customer_email, $order_number, $num_of_items, $total_price, $employee_email, $purchase_date, $arrival_date);
-                $result = $insertQuery->execute(array($customer_email, $order_number, $num_of_items, $total_price, $employee_email, $purchase_date, $arrival_date));
+                $result = $insertQuery->execute(array($payment_id, $customer_email, $card_number, $purchase_date));
                 if($result) {
-                    header("location: payment.php");
+                    header("location: success.html");
                     exit;
                 } else {
                     $error .= '<p class="error">Something went wrong!</p>';
@@ -78,24 +62,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Add Order</h2>
-                    <p>Please fill this form to add an order</p>
+                    <h2>Payment details</h2>
+                    <p>Please fill this form to finish your order</p>
                     <form action="" method="post">
                         <div class="form-group">
                             <label>Customer Email</label>
                             <input type="email" name="customer email" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <span class="text">Total number of items</span>
-                            <span class="price"><?=count($products_in_cart)?></span>
-                        </div>
-                        <div class="subtotal">
-                            <span class="text">Subtotal</span>
-                            <span class="price">&dollar;<?=$subtotal?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Employee Email (optional)</label>
-                            <input type="email" name="employee email" class="form-control">
+                            <label>Card Number</label>
+                            <input type="text" name="card number" class="form-control" required>
                         </div>
                         </div>
                         <div class="form-group">

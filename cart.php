@@ -57,7 +57,7 @@ if (isset($_POST['update']) && isset($_SESSION['cart'])) {
 
 // send the user to the place order page if they click the Place Order button and cart is not empty
 if (isset($_POST['placeorder']) && isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    header('Location: index.php?page=placeorder');
+    header('Location: index.php?page=checkout');
     exit;
 }
 
@@ -83,28 +83,25 @@ if ($products_in_cart) {
 
 ?>
 
-<?=template_header('Cart')?>
-
 <head>
-	<title>The Accessory Store Home</title>
-	<link rel="stylesheet" type="text/css" href="page.css">
-</head>
-<body>
-	<header>
-		<header class="logoHead">
-            <img class="logo" src="https://th.bing.com/th?id=OIP.-xf4eNCR1IKEaj4KNY07UAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2">  
-        <nav>
-            
-            <ul>
-                <li><a href="/database-project/home.php">Home</a></li>
-                <li><a href="/database-project/products.php">Shop</a></li>
-                <li><a href="/database-project/AboutUs.html">About Us</a></li>
-                <li><a href="/database-project/logout.php">Logout</a></li>
-				<a href="#"><img src="https://th.bing.com/th/id/OIP.wSF1rtzcFeEgwEBNxJUiPQHaHa?w=213&h=193&c=7&r=0&o=5&dpr=1.5&pid=1.7" width="30" height="30" alt=""></a>
-            </ul>
-		</header>
-    </header>
-</body>
+            <link rel="stylesheet" href="page.css">
+        </head>
+        <body>
+        <header>
+            <header class="logoHead">
+                <img class="logo" src="https://th.bing.com/th?id=OIP.-xf4eNCR1IKEaj4KNY07UAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2">  
+            <nav>
+                <ul>
+                    <li><a href="/database-project/home.php">Home</a></li>
+                    <li><a href="/database-project/products.php">Shop</a></li>
+                    <li><a href="/database-project/AboutUs.html">About Us</a></li>
+                    <li><a href="/database-project/logout.php">Logout</a></li>
+                    <a href="/database-project/cart.php"><img src="https://th.bing.com/th/id/OIP.wSF1rtzcFeEgwEBNxJUiPQHaHa?w=213&h=193&c=7&r=0&o=5&dpr=1.5&pid=1.7" width="30" height="30" alt=""></a>
+                </ul>
+        </header>
+        </body>
+        <main>
+
 <div>
 <link rel="style" href="stylepage.css">
 <div class="cart content-wrapper">
@@ -155,6 +152,7 @@ if ($products_in_cart) {
             <input type="submit" value="Update" name="update">
             <input type="submit" value="Place Order" name="placeorder">
         </div>
+        <a href="/database-project/products.php">Continute shopping</a>
     </form>
 </div>
                 </div> 
