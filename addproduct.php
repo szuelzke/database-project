@@ -4,20 +4,20 @@ require_once "index.php";
 require_once "session.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-    
-    $product_name = trim($_POST['name']);
-    $cost = trim($_POST['cost']);
-    $category = trim($_POST['category']);
-    $availability = trim($_POST['availability']);
-    $material = trim($_POST['material']);
-    $color = trim($_POST['color']);
-    $size = trim($_POST['size']);
+    echo 'test';
+    $itemName = trim($_POST['name']);
+    $itemDesc = trim($_POST['itemDesc']);
+    $itemPrice = trim($_POST['itemPrice']);
+    $rrp = trim($_POST['rrp']);
+    $itemQuantity = trim($_POST['itemQuantity']);
+    $itemImg = trim($_POST['itemImg']);
+    $date_added = trim($_POST['date_added']);
 
-    if($query = $pdo->prepare("SELECT * FROM products WHERE product_name = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM merch WHERE itemName = ? ")) {
         $error = '';
 
-        //$query->bind_param('s', $product_name);
-        $query->execute(array($product_name));
+        //$query->bind_param('s', $itemName);
+        $query->execute(array($itemName));
         //$query->store_result();
 
         if($query->num_rows > 0) {
@@ -26,10 +26,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $pdo->prepare("INSERT INTO products (cost, product_name, category, availability, material, color, size) VALUE (?, ?, ?, ?, ?, ?, ?)");
+                $insertQuery = $pdo->prepare("INSERT INTO merch (itemName, itemDesc, itemPrice, rrp, itemQuantity, itemImg, date_added) VALUE (?, ?, ?, ?, ?, ?, ?)");
 
                 //$insertQuery->bind_param("sssssss", $cost, $product_name, $category, $availability, $material, $color, $size);
-                $result = $insertQuery->execute(array($cost, $product_name, $category, $availability, $material, $color, $size));
+                $result = $insertQuery->execute(array($itemName, $itemDesc, $itemPrice, $rrp, $itemQuantity, $itemImg, $date_added));
                 if($result) {
                     $error .= '<p class="success">Product successfully added!</p>';
                     echo "Product Successfully added!";
@@ -69,33 +69,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                     <p>Please fill this form to add a product</p>
                     <form action="" method="post">
                         <div class="form-group">
-                            <label>Product Name</label>
+                            <label>Item Name</label>
                             <input type="text" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Cost</label>
-                            <input type="text" name="cost" class="form-control" required>
+                            <label>Item Description</label>
+                            <input type="text" name="itemDesc" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Category</label>
-                            <input type="text" name="category" class="form-control" required>
+                            <label>Item Price</label>
+                            <input type="decimal" name="itemPrice" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>availability</label>
-                            <input type="int" name="availability" class="form-control" required>
+                            <label>rrp</label>
+                            <input type="decimal" name="rrp" class="form-control" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Material</label>
-                            <input type="text" name="material" class="form-control" required>
+                            <label>Item Quantity</label>
+                            <input type="text" name="itemQuantity" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Color</label>
-                            <input type="text" name="color" class="form-control" required>
+                            <label>itemImg</label>
+                            <input type="text" name="itemImg" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Size</label>
-                            <input type="text" name="size" class="form-control" required>
+                            <label>Date Added</label>
+                            <input type="date" name="date_added" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-primary" value="Submit">
