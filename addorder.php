@@ -1,6 +1,6 @@
 <?php
 
-require_once "config.php";
+require_once "index.php";
 require_once "session.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
@@ -13,12 +13,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $purchase_date = trim($_POST['purchase_date']);
     $arrival_date = trim($_POST['arrival_date']);
 
-    if($query = $db->prepare("SELECT * FROM order_info WHERE order_number = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM order_info WHERE order_number = ? ")) {
         $error = '';
 
-        $query->bind_param('s', $order_number);
-        $query->execute();
-        $query->store_result();
+        //$query->bind_param('s', $order_number);
+        $query->execute(array($order_number));
+        //$query->store_result();
 
         if($query->num_rows > 0) {
             $error .= '<p class="Error">Order already registered!</p>';
@@ -26,10 +26,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $db->prepare("INSERT INTO order_info (customer_email, order_number, num_of_items, total_price, employee_email, purchase_date, arrival_date) VALUE (?, ?, ?, ?, ?, ?, ?)");
+                $insertQuery = $pdo->prepare("INSERT INTO order_info (customer_email, order_number, num_of_items, total_price, employee_email, purchase_date, arrival_date) VALUE (?, ?, ?, ?, ?, ?, ?)");
 
-                $insertQuery->bind_param("sssssss", $customer_email, $order_number, $num_of_items, $total_price, $employee_email, $purchase_date, $arrival_date);
-                $result = $insertQuery->execute();
+                //$insertQuery->bind_param("sssssss", $customer_email, $order_number, $num_of_items, $total_price, $employee_email, $purchase_date, $arrival_date);
+                $result = $insertQuery->execute(array($customer_email, $order_number, $num_of_items, $total_price, $employee_email, $purchase_date, $arrival_date));
                 if($result) {
                     $error .= '<p class="success">Order successfully added!</p>';
                     echo "Order Successfully added!";
@@ -44,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $query->close();
     //$insertQuery->close();
-    mysqli_close($db);
+    mysqli_close($pdo);
 }
 ?>
 

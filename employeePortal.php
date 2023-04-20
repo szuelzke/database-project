@@ -20,9 +20,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     }
 
     if(empty($error)) {
-        if($query = $db->prepare("SELECT * FROM employees WHERE employee_email = ?")) {
-            $query->bind_param('s',$email);
-            $query->execute();
+        if($query = $pdo->prepare("SELECT * FROM employees WHERE employee_email = ?")) {
+            //$query->bind_param('s',$email);
+            $query->execute(array($email));
             $row = $query->fetch();
             echo $row['password'];
             echo "testing";

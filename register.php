@@ -19,12 +19,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-    if($query = $db->prepare("SELECT * FROM customers WHERE customer_email = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM customers WHERE customer_email = ? ")) {
         $error = '';
 
-        $query->bind_param('s', $email);
-        $query->execute();
-        $query->store_result();
+        //$query->bind_param('s', $email);
+        $query->execute(array($email));
+        //$query->store_result();
 
         if($query->num_rows > 0) {
             $error .= '<p class="Error">The email address is already registered!</p>';
@@ -44,10 +44,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $db->prepare("INSERT INTO customers (customer_name, customer_email, phone_number, card_number, address, city, state, zip_code, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                $insertQuery = $pdo->prepare("INSERT INTO customers (customer_name, customer_email, phone_number, card_number, address, city, state, zip_code, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
-                $insertQuery->bind_param("sssssssss", $fullname, $email, $phone_number, $card_number, $address, $city, $state, $zip_code, $password_hash);
-                $result = $insertQuery->execute();
+                //$insertQuery->bind_param("sssssssss", $fullname, $email, $phone_number, $card_number, $address, $city, $state, $zip_code, $password_hash);
+                $result = $insertQuery->execute(array($fullname, $email, $phone_number, $card_number, $address, $city, $state, $zip_code, $password_hash));
                 if($result) {
                     $error .= '<p class="success">Your reistration was successfull</p>';
                     echo "Your reistration was successfull";

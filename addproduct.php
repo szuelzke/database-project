@@ -1,6 +1,6 @@
 <?php
 
-require_once "config.php";
+require_once "index.php";
 require_once "session.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
@@ -13,12 +13,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $color = trim($_POST['color']);
     $size = trim($_POST['size']);
 
-    if($query = $db->prepare("SELECT * FROM products WHERE product_name = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM products WHERE product_name = ? ")) {
         $error = '';
 
-        $query->bind_param('s', $product_name);
-        $query->execute();
-        $query->store_result();
+        //$query->bind_param('s', $product_name);
+        $query->execute(array($product_name));
+        //$query->store_result();
 
         if($query->num_rows > 0) {
             $error .= '<p class="Error">Product already registered!</p>';
@@ -26,10 +26,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $db->prepare("INSERT INTO products (cost, product_name, category, availability, material, color, size) VALUE (?, ?, ?, ?, ?, ?, ?)");
+                $insertQuery = $pdo->prepare("INSERT INTO products (cost, product_name, category, availability, material, color, size) VALUE (?, ?, ?, ?, ?, ?, ?)");
 
-                $insertQuery->bind_param("sssssss", $cost, $product_name, $category, $availability, $material, $color, $size);
-                $result = $insertQuery->execute();
+                //$insertQuery->bind_param("sssssss", $cost, $product_name, $category, $availability, $material, $color, $size);
+                $result = $insertQuery->execute(array($cost, $product_name, $category, $availability, $material, $color, $size));
                 if($result) {
                     $error .= '<p class="success">Product successfully added!</p>';
                     echo "Product Successfully added!";
@@ -44,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $query->close();
     //$insertQuery->close();
-    mysqli_close($db);
+    mysqli_close($pdo);
 }
 ?>
 

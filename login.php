@@ -20,9 +20,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     }
 
     if(empty($error)) {
-        if($query = $db->prepare("SELECT * FROM customers WHERE customer_email = ?")) {
-            $query->bind_param('s',$email);
-            $query->execute();
+        if($query = $pdo->prepare("SELECT * FROM customers WHERE customer_email = ?")) {
+            //query->bindParam('customer_email', $email);
+
+            $query->execute(array($email));
             $row = $query->fetch();
 
             if($row) {
@@ -30,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                     $_SESSION["userid"] = $row['id'];
                     $_SESSION["user"] = $row;
                     echo "test";
-                    header("location: home.html");
+                    header("location: home.php");
                     exit;
                 } else {
                     $error .= '<p class="error">Password is not valid.</p>';

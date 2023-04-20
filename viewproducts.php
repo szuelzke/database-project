@@ -1,7 +1,7 @@
 <?php
-include('config.php');
-$query = "SELECT * FROM products";
-$prepared = $db->prepare($query);
+include('index.php');
+$query = "SELECT * FROM merch";
+$prepared = $pdo->prepare($query);
 $prepared->execute();
 $result = $prepared->get_result();
 ?>

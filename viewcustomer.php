@@ -1,5 +1,5 @@
 <?php
-include('config.php');
+include('index.php');
 $query = "SELECT * FROM customers";
 $prepared = $db->prepare($query);
 $prepared->execute();

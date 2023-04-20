@@ -16,12 +16,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-    if($query = $db->prepare("SELECT * FROM employees WHERE employee_email = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM employees WHERE employee_email = ? ")) {
         $error = '';
 
-        $query->bind_param('s', $email);
-        $query->execute();
-        $query->store_result();
+        //$query->bind_param('s', $email);
+        $query->execute(array($email));
+        //$query->store_result();
 
         if($query->num_rows > 0) {
             $error .= '<p class="Error">The email address is already registered!</p>';
@@ -41,10 +41,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $db->prepare("INSERT INTO employees (employee_name, employee_email, date_of_birth, department, start_date, salary, password) VALUES (?, ?, ?, ?, ?, ?, ?);");
+                $insertQuery = $pdo->prepare("INSERT INTO employees (employee_name, employee_email, date_of_birth, department, start_date, salary, password) VALUES (?, ?, ?, ?, ?, ?, ?);");
 
-                $insertQuery->bind_param("sssssss", $fullname, $email, $date_of_birth, $department, $start_date, $salary, $password_hash);
-                $result = $insertQuery->execute();
+                //$insertQuery->bind_param("sssssss", $fullname, $email, $date_of_birth, $department, $start_date, $salary, $password_hash);
+                $result = $insertQuery->execute(array($fullname, $email, $date_of_birth, $department, $start_date, $salary, $password_hash));
                 if($result) {
                     $error .= '<p class="success">Employee succesfully added!</p>';
                     echo "Employee succesfully added!";

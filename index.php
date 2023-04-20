@@ -5,7 +5,7 @@ include 'functions.php';
 $pdo = pdo_connect_mysql();
 
 // home is default landing page 
-$page = isset($_GET['page']) && file_exists($_GET['page'] . '.php') ? $_GET['page'] : 'default';
+$page = isset($_GET['page']) && file_exists($_GET['page'] . '.php') ? $_GET['page'] : 'welcome';
 // include and show the requested page
 include $page . '.php';
 ?>

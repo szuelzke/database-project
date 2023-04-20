@@ -1,27 +1,27 @@
 <?php
 
-require_once "config.php";
+require_once "index.php";
 require_once "session.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $email = trim($_POST['email']);
-    if($query = $db->prepare("SELECT * FROM employees WHERE employee_email = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM employees WHERE employee_email = ? ")) {
 
         $error = '';
 
-        $query->bind_param('s', $email);
-        $query->execute();
-        $query->store_result();
+        //$query->bind_param('s', $email);
+        $query->execute(array($email));
+        //$query->store_result();
 
         if($query->num_rows < 0) {
             echo "msg";
             $error .= '<p class="Error">err</p>';
         } else {
             echo "debug";
-            $update = $db->prepare("DELETE FROM employees WHERE employee_email = ?");
-            $update->bind_param('s', $email);
-            $result = $update->execute();
+            $update = $pdo->prepare("DELETE FROM employees WHERE employee_email = ?");
+            //$update->bind_param('s', $email);
+            $result = $update->execute(array($email));
             if($result){
                 echo "Employee Successfully removed!";
                 header("location: employee.html");

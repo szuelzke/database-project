@@ -1,5 +1,5 @@
 <?php
-include('config.php');
+include('index.php');
 $query = "SELECT * FROM payment";
 $prepared = $db->prepare($query);
 $prepared->execute();

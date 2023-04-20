@@ -1,27 +1,27 @@
 <?php
 
-require_once "config.php";
+require_once "index.php";
 require_once "session.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $order_number = trim($_POST['order_number']);
-    if($query = $db->prepare("SELECT * FROM order_info WHERE order_number = ? ")) {
+    if($query = $pdo->prepare("SELECT * FROM order_info WHERE order_number = ? ")) {
 
         $error = '';
 
-        $query->bind_param('s', $order_number);
-        $query->execute();
-        $query->store_result();
+        //$query->bind_param('s', $order_number);
+        $query->execute(array($order_number));
+        //$query->store_result();
 
         if($query->num_rows < 0) {
             echo "msg";
             $error .= '<p class="Error">err</p>';
         } else {
             echo "debug";
-            $update = $db->prepare("DELETE FROM order_info WHERE order_number = ?");
-            $update->bind_param('s', $order_number);
-            $result = $update->execute();
+            $update = $pdo->prepare("DELETE FROM order_info WHERE order_number = ?");
+            //$update->bind_param('s', $order_number);
+            $result = $update->execute(array($order_number));
             if($result){
                 echo "Customer Successfully removed!";
                 header("location: employee.html");

@@ -3,7 +3,7 @@
 session_start();
 
 if (session_destroy()) {
-    header("Location: welcome.html");
+    header("Location: welcome.php");
     exit;
 }
 ?>
