@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $confirm_password = trim($_POST['confirm_password']);
 
     $phone_number = trim($_POST['phone_number']);
-    $card_number = trim($_POST['card_number']);
+    //$card_number = trim($_POST['card_number']);
     $address = trim($_POST['address_line']);
     $city = trim($_POST['city']);
     $state = trim($_POST['state']);
@@ -43,10 +43,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             if (empty($error) ) {
                 echo "test";
 
-                $insertQuery = $pdo->prepare("INSERT INTO customers (customer_name, customer_email, phone_number, card_number, address, city, state, zip_code, password) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $insertQuery = $pdo->prepare("INSERT INTO customers (customer_name, customer_email, phone_number, address, city, state, zip_code, password) VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
 
                 //$insertQuery->bind_param("sssssssss", $fullname, $email, $phone_number, $card_number, $address, $city, $state, $zip_code, $password_hash);
-                $result = $insertQuery->execute(array($fullname, $email, $phone_number, $card_number, $address, $city, $state, $zip_code, $password_hash));
+                $result = $insertQuery->execute(array($fullname, $email, $phone_number, $address, $city, $state, $zip_code, $password_hash));
                 if($result) {
                     $error .= '<p class="success">Customer successfully added!</p>';
                     echo "Customer Successfully added!";
@@ -106,10 +106,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                             <label>Phone Number</label>
                             <input type="text" name="phone number" class="form-control" required>
                         </div>
-                        <div class="form-group">
-                            <label>Card Number</label>
-                            <input type="text" name="card number" class="form-control" required>
-                        </div>
+                        
                         <div class="form-group">
                             <label>Address Line</label>
                             <input type="text" name="address line" class="form-control" required>

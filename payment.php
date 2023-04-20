@@ -75,12 +75,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         </div>
                         </div>
                         <div class="form-group">
-                            <label>Purchase Date</label>
+                            <label>Payment Date</label>
                             <span class="price"><?=date("y/m/d")?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Arrival Date</label>
-                            <span class="price"><?=date('y/m/d', strtotime('+3 days'))?></span>
                         </div>
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-primary" value="Submit">
